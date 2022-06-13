@@ -15,6 +15,8 @@ public class MockMailer implements IMailer {
 	@Override
 	public String send(Mail mail) {
 		
+		log.debug("Entered "+this.getClass());
+		
 		log.info("Mail sent to "+mail.getTo());
 		log.info("Mail sent with subject "+mail.getSubject());
 		log.info("Mail sent with body "+mail.getBody());
