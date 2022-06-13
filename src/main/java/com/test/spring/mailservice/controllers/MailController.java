@@ -1,7 +1,9 @@
 package com.test.spring.mailservice.controllers;
 
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.spring.mailservice.mailer.IMailer;
@@ -17,9 +19,9 @@ public class MailController {
 	}
 
 	
-	@RequestMapping("/mail")
-	public String mail() {
-		Mail mail = new Mail("dixit.shashank1409@gmail.com", "Congratuations!!", "The mail you were trying to send is received successfully.\nRegards,\nShashank Dixit");
+	@RequestMapping(value="/mail", method = RequestMethod.POST)
+	public String mail(@RequestBody Mail mail) {
+		//mail = new Mail("dixit.shashank1409@gmail.com", "Congratuations!!", "The mail you were trying to send is received successfully.\nRegards,\nShashank Dixit");
 		return mailer.send(mail);
 	}
 	
