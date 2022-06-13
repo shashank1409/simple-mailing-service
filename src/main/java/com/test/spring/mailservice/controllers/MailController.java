@@ -21,7 +21,6 @@ public class MailController {
 	
 	@RequestMapping(value="/mail", method = RequestMethod.POST)
 	public String mail(@RequestBody Mail mail) {
-		//mail = new Mail("dixit.shashank1409@gmail.com", "Congratuations!!", "The mail you were trying to send is received successfully.\nRegards,\nShashank Dixit");
 		return mailer.send(mail);
 	}
 	
