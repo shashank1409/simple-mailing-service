@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,11 @@ public class SmtpMailer implements IMailer{
 		this.mailSender=mailSender;
 	}
 
-	private static Logger log = LogManager.getLogger(MockMailer.class);
+	private static Logger log = LogManager.getLogger(SmtpMailer.class);
 	@Override
 	public String send(Mail mail) {
+		
+		log.debug("Entered "+this.getClass());
 		try {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper;
@@ -39,7 +42,11 @@ public class SmtpMailer implements IMailer{
 		
 		mailSender.send(mimeMessage);
 		
-		}catch(MessagingException ex) {
+		}catch(MailAuthenticationException ex) {
+			log.error(ex);
+			return "Invalid username or password, hence unable to login";
+		}
+		catch(MessagingException ex) {
 			log.error(ex);
 			return "Could not sent mail";
 		}
